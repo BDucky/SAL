@@ -33,6 +33,12 @@ class Scene2 extends Phaser.Scene {
         this.spacebar = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.SPACE
         );
+
+        var randomNumber = Phaser.Math.Between(1, 6);
+        for (var i = 0; i < randomNumber; i++) {
+            this.randomLadders(randomNumber);
+            console.log("random", randomNumber);
+        }
     }
 
     update() {
@@ -40,7 +46,6 @@ class Scene2 extends Phaser.Scene {
             var randomNumber = Phaser.Math.Between(1, 6);
             console.log("random", randomNumber);
             this.loopMove(randomNumber);
-            this.randomLadders(randomNumber);
         }
     }
 
@@ -76,7 +81,6 @@ class Scene2 extends Phaser.Scene {
             targetY == 50;
             console.log("You win!");
         }
-        console.log(targetX, targetY);
 
         this.player1.x = targetX;
         this.player1.y = targetY;
@@ -91,22 +95,24 @@ class Scene2 extends Phaser.Scene {
         }
     }
 
+    placeLadders() {
+
+    }
+
     randomLadders(randomNumber) {
         var ladder = gameSettings.ladders[randomNumber];
         console.log(ladder);
+        console.log(gameSettings.ladderCell.x);
 
-        // place ladders (as rectangles) at random locations
-        var x = Phaser.Math.Between(1, 9)
-        var ladderX = x * gameSettings.squareSize
-        var y = Phaser.Math.Between(1, 9)
-        var ladderY = y * gameSettings.squareSize + gameSettings.squareSize / 2;
-        var x2 = (x + ladder.incX)
-        var ladderX2 = gameSettings.ladders[randomNumber].incX * gameSettings.squareSize
-        var y2 = (y + ladder.incY)
-        var ladderY2 = gameSettings.ladders[randomNumber].incY * gameSettings.squareSize
-        var color = 0x00ff00;
-        var graphic = this.add.graphics(this).fillStyle(color).fillRect(ladderX, ladderY, ladderX2, ladderY2);
-        console.log(x, y, x2, y2);
-        console.log(ladderX, ladderY, ladderX2, ladderY2);
+        gameSettings.ladderCell.x = Phaser.Math.Between(0, 9);
+        gameSettings.ladderCell.y = Phaser.Math.Between(0, 9);
+        console.log(gameSettings.ladderCell.x);
+        console.log(gameSettings.ladderCell.y);
+        console.log(gameSettings.ladderCell);
+
+        if (gameSettings.ladderCell.y + gameSettings.ladders[randomNumber].incY <= 9
+            && gameSettings.ladderCell.x + gameSettings.ladders[randomNumber].incX <= 9
+            && gameSettings.ladderCell.x + gameSettings.ladders[randomNumber].incX >= 0) {
+        }
     }
 }
